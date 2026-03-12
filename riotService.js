@@ -82,16 +82,21 @@ const getPlayerStats = (matchDetails, puuid) => {
     return null;
   }
 };
-const showMatchIds = async () => {
-  const puuid = await getPUUID();
-  const matchIds = await getMatchIds(puuid);
-  for (let matchId of matchIds) {
-    let matchDetails = await getMatchDetails(matchId);
-    let playerStats = await getPlayerStats(matchDetails, puuid);
-    console.log(
-      `Champion: ${playerStats.championName}, K/D/A: ${playerStats.kills}/${playerStats.deaths}/${playerStats.assists}, Win: ${playerStats.win ? "Yes" : "No"}`,
-    );
-  }
-};
+// const showMatchIds = async () => {
+//   const puuid = await getPUUID();
+//   const matchIds = await getMatchIds(puuid);
+//   for (let matchId of matchIds) {
+//     let matchDetails = await getMatchDetails(matchId);
+//     let playerStats = await getPlayerStats(matchDetails, puuid);
+//     console.log(
+//       `Champion: ${playerStats.championName}, K/D/A: ${playerStats.kills}/${playerStats.deaths}/${playerStats.assists}, Win: ${playerStats.win ? "Yes" : "No"}`,
+//     );
+//   }
+// };
 
-showMatchIds();
+module.exports = {
+  getPUUID,
+  getMatchIds,
+  getMatchDetails,
+  getPlayerStats,
+}

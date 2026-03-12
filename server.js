@@ -1,5 +1,6 @@
 const http = require('http');
 const { URL } = require('url');
+const api =  require('./riotService.js');
 
 
 const server = http.createServer((req, res) => {
