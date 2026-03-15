@@ -4,10 +4,7 @@ const RIOT_KEY = process.env.RIOT_API_KEY;
 const baseURL = "https://americas.api.riotgames.com/";
 
 //Takes summoner name and tag line as arguements from the terminal and returns the PUUID
-async function getPUUID() {
-  const args = process.argv.slice(2);
-  const summonerName = args[0];
-  const tagLine = args[1];
+async function getPUUID(summonerName, tagLine) {
   const url = `https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${summonerName}/${tagLine}`;
   try {
     const response = await fetch(url, {
@@ -82,21 +79,36 @@ const getPlayerStats = (matchDetails, puuid) => {
     return null;
   }
 };
-// const showMatchIds = async () => {
-//   const puuid = await getPUUID();
-//   const matchIds = await getMatchIds(puuid);
-//   for (let matchId of matchIds) {
-//     let matchDetails = await getMatchDetails(matchId);
-//     let playerStats = await getPlayerStats(matchDetails, puuid);
-//     console.log(
-//       `Champion: ${playerStats.championName}, K/D/A: ${playerStats.kills}/${playerStats.deaths}/${playerStats.assists}, Win: ${playerStats.win ? "Yes" : "No"}`,
-//     );
-//   }
-// };
+const showMatchIds = async () => {
+  const puuid = await getPUUID();
+  const matchIds = await getMatchIds(puuid);
+  for (let matchId of matchIds) {
+    let matchDetails = await getMatchDetails(matchId);
+    let playerStats = await getPlayerStats(matchDetails, puuid);
+    console.log(
+      `Champion: ${playerStats.championName}, K/D/A: ${playerStats.kills}/${playerStats.deaths}/${playerStats.assists}, Win: ${playerStats.win ? "Yes" : "No"}`,
+    );
+  }
+};
+
+const getMatchStats = async (summonerName, tagLine) => {
+  const puuid = await getPUUID(summonerName, tagLine);
+  const matchIds = await getMatchIds(puuid);
+  let matchStats = [];
+  for (let matchId of matchIds) {
+    let matchDetails = await getMatchDetails(matchId);
+    let playerStats = await getPlayerStats(matchDetails, puuid);
+    matchStats.push({
+      champion: playerStats.championName,
+      kills: playerStats.kills,
+      deaths: playerStats.deaths,
+      assists: playerStats.assists,
+      win: playerStats.win,
+    });
+  }
+  return matchStats;
+};
 
 module.exports = {
-  getPUUID,
-  getMatchIds,
-  getMatchDetails,
-  getPlayerStats,
+  getMatchStats
 }
