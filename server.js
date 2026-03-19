@@ -1,6 +1,7 @@
 const http = require('http');
 const { URL } = require('url');
 const riot =  require('./riotService.js');
+const fs = require('fs');
 
 
 const server = http.createServer( async (req, res) => {
@@ -13,8 +14,28 @@ const server = http.createServer( async (req, res) => {
         const matchStats = await riot.getMatchStats(summonerName, tagLine);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ matchStats }));
+    } else if (myURL.pathname == '/' && req.method === 'GET') {
+        fs.readFile('./index.html', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal Server Error');
+            } else {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.end(data);
+            }
+        });
+    } else if(myURL.pathname == '/script.js' && req.method === 'GET') {
+        fs.readFile('./script.js', (err, data) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal Server Error');
+            }   else {
+                res.writeHead(200, { 'Content-Type': 'application/javascript'});
+                res.end(data);
+            }
+        });
     } else {
-        res.writeHead(404);
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found');
     }
 
