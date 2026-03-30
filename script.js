@@ -10,7 +10,16 @@ async function getStats() {
         }
         const data = await response.json();
         const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = `<pre>${JSON.stringify(data.matchStats, null, 2)}</pre>`;
+         const formatString = data.matchStats.map(match => {
+            return `
+                <div class="match-card">
+                    <h2>${match.champion}</h2>
+                    <p>KDA: ${match.kills}/${match.deaths}/${match.assists}</p>
+                    <p>Result: ${match.win ? "Win" : "Lose"}</p>
+                </div>
+            `
+        }).join("")
+        resultsDiv.innerHTML = formatString;
     } catch (error) {
         console.error('Error fetching stats:', error);
     }
