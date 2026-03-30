@@ -1,4 +1,4 @@
-node_modules/g
+node_modules/
 # dotenv environment variable files
 .env
 .env.*
