@@ -43,18 +43,7 @@ const server = http.createServer( async (req, res) => {
                 res.end(data);
             }
         });
-    } else if (myURL.pathname == '/styles.css' && req.method == 'GET'){
-        fs.readFile('./styles.css', (err, data) => {
-            if (err) {
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Internal Server Error');
-            } else {
-                res.writeHead(200, { 'Content-Type': 'text/css' });
-                res.end(data);
-            }
-        })
-    }
-     else {
+    } else {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('Not Found');
     }
