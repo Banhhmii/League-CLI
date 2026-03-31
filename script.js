@@ -1,5 +1,5 @@
-
-async function getStats() {
+async function getStats(event) {
+    event.preventDefault();
     const summonerName = document.getElementById('summonerName').value;
     const tagLine = document.getElementById('tagLine').value;
 
@@ -13,16 +13,17 @@ async function getStats() {
          const formatString = data.matchStats.map(match => {
             return `
                 <div class="match-card">
-                    <h2>${match.champion}</h2>
+                    <img src="https://ddragon.leagueoflegends.com/cdn/14.6.1/img/champion/${match.champion}.png" alt="${match.champion}">
                     <p>KDA: ${match.kills}/${match.deaths}/${match.assists}</p>
                     <p>Result: ${match.win ? "Win" : "Lose"}</p>
                 </div>
             `
         }).join("")
         resultsDiv.innerHTML = formatString;
+        document.getElementById('search-form').reset();
     } catch (error) {
         console.error('Error fetching stats:', error);
     }
-
 }
 
+ document.getElementById('search-form').addEventListener('submit', getStats);

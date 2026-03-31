@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>League of Legends Stats</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-        <div class="container">
-        <div class="search">
+    <h1>LoL Stats Tracker</h1>
+    <div class="container">
+        <form id="search-form" class="search">
             <input type="text" id="summonerName" placeholder="Enter summoner name" >
             <input type="text" id="tagLine" placeholder="Enter tag line (e.g. NA, EUW)" >
-            <button onclick="getStats()">Submit</button>
-        </div>
+            <button id="submitBtn" type="submit">Submit</button>
+        </form>
         <div id="results"></div>
     </div>
     <script src="script.js"></script>
 </body>
+<footer>
+    <p>&copy; 2024 LoL Stats Tracker. All rights reserved. LoL Stats Tracker isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc."</p>
+</footer>
 </html>

@@ -2,7 +2,9 @@ const http = require('http');
 const { URL } = require('url');
 const riot =  require('./riotService.js');
 const fs = require('fs');
+
 const statsCache = new Map();
+const port = process.env.PORT || 3000;
 
 const server = http.createServer( async (req, res) => {
     const baseURL = `http://localhost:3000`;
@@ -61,6 +63,6 @@ const server = http.createServer( async (req, res) => {
 
 });
 
-server.listen(3000, () => {
-    console.log('Server is running on port 3000');
+server.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 })
