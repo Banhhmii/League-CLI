@@ -7,7 +7,7 @@ const statsCache = new Map();
 const port = process.env.PORT || 3000;
 
 const server = http.createServer( async (req, res) => {
-    const baseURL = `http://localhost:3000`;
+    const baseURL = `http://${req.headers.host}`;
     const myURL = new URL(req.url, baseURL);
     const summonerName = myURL.searchParams.get('summonerName');
     const tagLine = myURL.searchParams.get('tagLine');

@@ -4,7 +4,7 @@ async function getStats(event) {
     const tagLine = document.getElementById('tagLine').value;
 
     try {
-        const response = await fetch(`/api?summonerName=${summonerName}&tagLine=${tagLine}`);
+        const response = await fetch(`g/api?summonerName=${summonerName}&tagLine=${tagLine}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
