@@ -55,7 +55,13 @@ button {
     margin: 20px 0;
     justify-content: center;
     align-items: center;
-    
+}
+
+.error {
+    background-color: red;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 4px;
 }
 
 .match-card{

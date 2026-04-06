@@ -8,7 +8,7 @@ async function getStats(event) {
     try {
         const response = await fetch(`/api?summonerName=${summonerName}&tagLine=${tagLine}`);
         if (response.status === 404) {
-            resultsDiv.innerHTML = '<p>Summoner not found</p>';
+            resultsDiv.innerHTML = '<p class="error">Summoner not found</p>';
             return;
 
         }
