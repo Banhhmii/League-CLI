@@ -20,10 +20,16 @@ const server = http.createServer( async (req, res) => {
             res.end(JSON.stringify({ matchStats: statsCache.get(cacheKey) }));
             return;
         }else {
-            const matchStats = await riot.getMatchStats(summonerName, tagLine);
-            statsCache.set(cacheKey, matchStats);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ matchStats }));
+            try {
+                const matchStats = await riot.getMatchStats(summonerName, tagLine);
+                statsCache.set(cacheKey, matchStats);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ matchStats }));
+            } catch (error) {
+                console.error('Error fetching match stats:', error);
+                res.writeHead(404, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Summoner not found' }));
+            }
         }
     } else if (myURL.pathname == '/' && req.method === 'GET') {
         fs.readFile('./index.html', (err, data) => {
