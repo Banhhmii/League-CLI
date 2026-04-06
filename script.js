@@ -2,7 +2,7 @@ async function getStats(event) {
     event.preventDefault();
     const summonerName = document.getElementById('summonerName').value;
     const tagLine = document.getElementById('tagLine').value;
-    const resultsDiv = document.getElementById('results');
+    let resultsDiv = document.getElementById('results');
     let resultString;
 
     try {
