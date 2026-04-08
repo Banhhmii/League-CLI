@@ -1,9 +1,10 @@
 const http = require('http');
 const { URL } = require('url');
 const riot =  require('./riotService.js');
+const statsCache = require('./cacheService.js');
 const fs = require('fs');
 
-const statsCache = new Map();
+// const statsCache = new Map();
 const port = process.env.PORT || 3000;
 
 const server = http.createServer( async (req, res) => {
@@ -14,15 +15,16 @@ const server = http.createServer( async (req, res) => {
 
     if(myURL.pathname == '/api' && req.method === 'GET') {
         let cacheKey = `${summonerName}#${tagLine}`;
-        if(statsCache.has(cacheKey)){
+        const cachedStats = statsCache.checkCache(cacheKey);
+        if(cachedStats){
             console.log('Cache hit for', cacheKey);
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ matchStats: statsCache.get(cacheKey) }));
+            res.end(JSON.stringify({ matchStats: cachedStats }));
             return;
         }else {
             try {
                 const matchStats = await riot.getMatchStats(summonerName, tagLine);
-                statsCache.set(cacheKey, matchStats);
+                statsCache.setCache(cacheKey, matchStats);
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ matchStats }));
             } catch (error) {
